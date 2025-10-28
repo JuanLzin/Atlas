@@ -42,7 +42,7 @@ const App = {
     async init() {
         try {
             const user = await AuthService.handleAuth();
-            if (user && (user.name || user.displayName)) {
+            if (user) {
                 this.showAppView();
             } else {
                 this.showAuthView();
