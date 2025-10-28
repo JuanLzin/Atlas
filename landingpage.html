@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATLAS - A sua gestão financeira, agora mais sofisticada.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="shortcut icon" href="favicon.png">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .hero-gradient-text {
+            background: linear-gradient(to right, #1e3a8a, #3b82f6, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4), 0 0 30px rgba(59, 130, 246, 0.2);
+        }
+        .section-title {
+            background: linear-gradient(to right, #334155, #1e293b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .pricing-card-popular {
+            border-color: #4f46e5;
+            transform: scale(1.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- EFEITO DE FUNDO ANIMADO --- */
+        @keyframes move-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-gradient-bg {
+            background: linear-gradient(-45deg, #e0e7ff, #f0f9ff, #ecfeff, #f3e8ff);
+            background-size: 400% 400%;
+            animation: move-gradient 15s ease infinite;
+        }
+
+        /* --- EFEITO DE BRILHO (AURORA) NOS CARDS --- */
+        .feature-card-glow::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(199, 210, 254, 0.2), transparent 40%);
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .feature-card-glow:hover::before {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <!-- ===== Header ===== -->
+    <header id="header" class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2">
+                <img src="../logo2atlas.png" alt="ATLAS Logo" class="h-16 w-auto transition-transform duration-300 hover:scale-110">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#features" class="font-medium hover:text-indigo-600 transition-colors">Funcionalidades</a>
+                <a href="#pricing" class="font-medium hover:text-indigo-600 transition-colors">Planos</a>
+                <a href="#testimonials" class="font-medium hover:text-indigo-600 transition-colors">Depoimentos</a>
+            </nav>
+
+            <!-- CTA / Mobile Menu Toggle -->
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="hidden sm:block bg-indigo-100 text-indigo-700 px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-indigo-200 transition-colors">
+                    Área do Cliente
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-slate-800">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-lg">
+            <div class="flex flex-col items-center gap-4 p-6">
+                <a href="#features" class="font-medium hover:text-indigo-600 transition-colors w-full text-center py-2">Funcionalidades</a>
+                <a href="#pricing" class="font-medium hover:text-indigo-600 transition-colors w-full text-center py-2">Planos</a>
+                <a href="#testimonials" class="font-medium hover:text-indigo-600 transition-colors w-full text-center py-2">Depoimentos</a>
+                <a href="index.html" class="mt-4 bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-sm w-full text-center hover:bg-indigo-700 transition-colors">
+                    Área do Cliente
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ===== Hero Section ===== -->
+        <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 text-center overflow-hidden animated-gradient-bg">
+            <div class="container mx-auto px-6">
+                <div data-aos="fade-up">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-6">
+                        A gestão financeira que <br> <span class="hero-gradient-text">impulsiona o seu negócio.</span>
+                    </h1>
+                    <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-600 mb-10">
+                        Do autônomo à grande corporação, ATLAS é a plataforma inteligente para controlar orçamentos, recebimentos e despesas com clareza e sofisticação.
+                    </p>
+                    <div class="flex justify-center items-center gap-4">
+                        <a href="index.html" class="bg-indigo-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 btn-glow">
+                            Comece grátis por 14 dias
+                        </a>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="200" class="mt-16 md:mt-24 max-w-5xl mx-auto">
+                    <div class="bg-white p-2 rounded-2xl shadow-2xl border border-slate-200">
+                        <img src="https://placehold.co/1200x675/e2e8f0/334155?text=Mockup+do+Dashboard+ATLAS" alt="Dashboard do ATLAS" class="rounded-xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Features Section ===== -->
+        <section id="features" class="py-20 md:py-32 bg-white relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight section-title" data-aos="fade-up">Tudo o que você precisa, em um só lugar.</h2>
+                    <p class="mt-4 text-lg text-slate-600" data-aos="fade-up" data-aos-delay="100">
+                        Simplifique suas finanças e foque no que realmente importa: o crescimento do seu negócio.
+                    </p>
+                </div>
+
+                <div id="features-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature Card -->
+                    <div class="relative bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 feature-card-glow" data-aos="fade-up">
+                        <div class="bg-indigo-100 text-indigo-600 w-12 h-12 rounded-full flex items-center justify-center mb-5">
+                            <span class="material-symbols-outlined">request_quote</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Orçamentos Profissionais</h3>
+                        <p class="text-slate-600">Crie e envie propostas detalhadas em minutos, com cálculo automático e aparência profissional.</p>
+                    </div>
+                    <!-- Feature Card -->
+                    <div class="relative bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 feature-card-glow" data-aos="fade-up" data-aos-delay="100">
+                        <div class="bg-green-100 text-green-600 w-12 h-12 rounded-full flex items-center justify-center mb-5">
+                            <span class="material-symbols-outlined">receipt_long</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Controle de Recebimentos</h3>
+                        <p class="text-slate-600">Converta orçamentos em vendas e acompanhe cada parcela, sabendo exatamente o que e quando receber.</p>
+                    </div>
+                    <!-- Feature Card -->
+                    <div class="relative bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 feature-card-glow" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bg-red-100 text-red-600 w-12 h-12 rounded-full flex items-center justify-center mb-5">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Gestão de Despesas</h3>
+                        <p class="text-slate-600">Mantenha um registro claro de todas as suas saídas para ter uma visão completa da saúde do seu negócio.</p>
+                    </div>
+                    <!-- Feature Card -->
+                    <div class="relative bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 feature-card-glow" data-aos="fade-up">
+                        <div class="bg-sky-100 text-sky-600 w-12 h-12 rounded-full flex items-center justify-center mb-5">
+                            <span class="material-symbols-outlined">group</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Visão 360° do Cliente</h3>
+                        <p class="text-slate-600">Acesse o histórico completo de orçamentos, vendas e pagamentos de cada cliente em um só lugar.</p>
+                    </div>
+                    <!-- Feature Card -->
+                    <div class="relative bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 feature-card-glow" data-aos="fade-up" data-aos-delay="100">
+                        <div class="bg-amber-100 text-amber-600 w-12 h-12 rounded-full flex items-center justify-center mb-5">
+                            <span class="material-symbols-outlined">dashboard</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Dashboard Inteligente</h3>
+                        <p class="text-slate-600">Visualize KPIs, fluxo de caixa e funil de vendas em gráficos intuitivos e fáceis de entender.</p>
+                    </div>
+                    <!-- Feature Card -->
+                    <div class="relative bg-slate-50 p-8 rounded-2xl border border-slate-200 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 feature-card-glow" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bg-violet-100 text-violet-600 w-12 h-12 rounded-full flex items-center justify-center mb-5">
+                            <span class="material-symbols-outlined">picture_as_pdf</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Relatórios em PDF</h3>
+                        <p class="text-slate-600">Gere extratos de clientes e orçamentos em PDF com a sua marca, prontos para enviar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Pricing Section ===== -->
+        <section id="pricing" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight section-title" data-aos="fade-up">Escolha o plano ideal para o seu negócio.</h2>
+                    <p class="mt-4 text-lg text-slate-600" data-aos="fade-up" data-aos-delay="100">
+                        Comece pequeno e cresça com a gente. Planos flexíveis que se adaptam à sua necessidade.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-0 max-w-5xl mx-auto items-center">
+                    <!-- Pricing Card: Essencial -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-lg h-full" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-lg font-semibold text-indigo-600">Essencial</h3>
+                        <p class="text-slate-500 mt-2">Ideal para autônomos e pequenos negócios que precisam organizar as finanças.</p>
+                        <p class="text-4xl font-bold mt-6">R$ 29<span class="text-lg font-medium text-slate-500">/mês</span></p>
+                        <ul class="mt-8 space-y-4 text-slate-600">
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Gestão de Clientes</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Orçamentos Ilimitados</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Controle de Recebimentos</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>1 Usuário</li>
+                        </ul>
+                        <a href="index.html" class="mt-8 block w-full text-center bg-indigo-100 text-indigo-700 px-6 py-3 rounded-lg font-semibold hover:bg-indigo-200 transition-colors">
+                            Começar com Essencial
+                        </a>
+                    </div>
+
+                    <!-- Pricing Card: Profissional (Popular) -->
+                    <div class="bg-white p-8 rounded-2xl border-2 shadow-2xl relative h-full pricing-card-popular" data-aos="fade-up">
+                        <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
+                            <span class="bg-indigo-600 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase">Mais Popular</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-indigo-600">Profissional</h3>
+                        <p class="text-slate-500 mt-2">Para empresas em crescimento que necessitam de mais controle e colaboração.</p>
+                        <p class="text-5xl font-bold mt-6">R$ 79<span class="text-lg font-medium text-slate-500">/mês</span></p>
+                        <ul class="mt-8 space-y-4 text-slate-600">
+                            <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-green-500">check_circle</span>Tudo do plano Essencial, e mais:</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Gestão de Despesas</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Relatórios Avançados</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Múltiplos Usuários (até 5)</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Suporte Prioritário</li>
+                        </ul>
+                        <a href="index.html" class="mt-8 block w-full text-center bg-indigo-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-lg hover:shadow-xl">
+                            Experimente o Profissional
+                        </a>
+                    </div>
+
+                    <!-- Pricing Card: Enterprise -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-lg h-full" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-lg font-semibold text-indigo-600">Enterprise</h3>
+                        <p class="text-slate-500 mt-2">Soluções robustas e customizadas para grandes operações.</p>
+                        <p class="text-4xl font-bold mt-6">Customizado</p>
+                        <ul class="mt-8 space-y-4 text-slate-600">
+                            <li class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined text-green-500">check_circle</span>Tudo do plano Profissional, e mais:</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Integrações Customizadas</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Consultoria Dedicada</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>SLA Garantido</li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-green-500">check_circle</span>Segurança Avançada</li>
+                        </ul>
+                        <a href="mailto:vendas@atlas.com" class="mt-8 block w-full text-center bg-slate-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-900 transition-colors">
+                            Fale com um Especialista
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Testimonials Section ===== -->
+        <section id="testimonials" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight section-title" data-aos="fade-up">Amado por empresas de todos os tamanhos</h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Testimonial Card -->
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200" data-aos="fade-right">
+                        <div class="text-3xl text-indigo-300 mb-4">“</div>
+                        <p class="text-slate-600 mb-6">O ATLAS transformou nosso 'caderno preto' em um dashboard inteligente. Finalmente temos clareza sobre nossas finanças e podemos tomar decisões melhores.</p>
+                        <div class="flex items-center">
+                            <img src="https://i.pravatar.cc/150?img=1" alt="Foto do cliente" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <p class="font-bold">Joana Silva</p>
+                                <p class="text-sm text-slate-500">Dona, Café Aconchego</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial Card -->
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200" data-aos="fade-up">
+                        <div class="text-3xl text-indigo-300 mb-4">“</div>
+                        <p class="text-slate-600 mb-6">A gestão de orçamentos e recebimentos ficou muito mais ágil. A conversão de propostas em vendas com um clique é uma funcionalidade que economiza horas de trabalho.</p>
+                        <div class="flex items-center">
+                            <img src="https://i.pravatar.cc/150?img=3" alt="Foto do cliente" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <p class="font-bold">Marcos Lins</p>
+                                <p class="text-sm text-slate-500">CEO, Agência Criativa</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial Card -->
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200" data-aos="fade-left">
+                        <div class="text-3xl text-indigo-300 mb-4">“</div>
+                        <p class="text-slate-600 mb-6">Com o ATLAS, o controle do fluxo de caixa deixou de ser um pesadelo. Os relatórios são claros e a interface é extremamente intuitiva. Recomendo!</p>
+                        <div class="flex items-center">
+                            <img src="https://i.pravatar.cc/150?img=5" alt="Foto do cliente" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <p class="font-bold">Carla Andrade</p>
+                                <p class="text-sm text-slate-500">Diretora Financeira, Construtora Viver</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Final CTA Section ===== -->
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <div class="max-w-3xl mx-auto" data-aos="zoom-in">
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                        Pronto para <span class="hero-gradient-text">elevar</span> sua gestão financeira?
+                    </h2>
+                    <p class="text-lg text-slate-600 mb-10">
+                        Junte-se a centenas de empresas que já estão transformando seus negócios com o ATLAS. Sem cartão de crédito, sem compromisso.
+                    </p>
+                    <a href="index.html" class="bg-indigo-600 text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 btn-glow">
+                        Começar Agora
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="bg-slate-800 text-slate-300">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo e Social -->
+                <div class="md:col-span-1">
+                    <a href="#" class="flex items-center gap-2 mb-4">
+                        <img src="logo_atlas.png" alt="ATLAS Logo" class="h-10 w-auto filter invert brightness-0">
+                    </a>
+                    <p class="text-sm text-slate-400">Gestão financeira sofisticada para negócios de todos os portes.</p>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Produto</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#features" class="hover:text-white transition-colors">Funcionalidades</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition-colors">Planos</a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition-colors">Depoimentos</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Empresa</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Sobre Nós</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contato</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Carreiras</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Termos de Serviço</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 border-t border-slate-700 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm">
+                <p class="text-slate-400">&copy; 2024 ATLAS. Todos os direitos reservados.</p>
+                <!-- Social Icons Placeholder -->
+                <div class="flex gap-4 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Twitter</a>
+                    <a href="#" class="hover:text-white transition-colors">LinkedIn</a>
+                    <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Initialize AOS (Animate on Scroll)
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50,
+        });
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Header shadow on scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+        // Efeito Aurora nos cards de funcionalidades
+        const featuresGrid = document.getElementById('features-grid');
+        if (featuresGrid) {
+            featuresGrid.addEventListener('mousemove', e => {
+                const target = e.target.closest('.feature-card-glow');
+                if (target) {
+                    const rect = target.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    target.style.setProperty('--mouse-x', `${x}px`);
+                    target.style.setProperty('--mouse-y', `${y}px`);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
