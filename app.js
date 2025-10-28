@@ -270,6 +270,12 @@ const App = {
             this.state.selectedClients = [];
         }
 
+        if (view === 'dashboard') {
+            fabContainer.classList.remove('hidden');
+        } else {
+            fabContainer.classList.add('hidden');
+        }
+
         const mainContent = document.getElementById('mainContent');
         const fabContainer = document.getElementById('fab-container');
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -279,6 +285,20 @@ const App = {
         } else {
             fabContainer.classList.add('hidden');
         }
+
+        const navigate = () => {
+            if (views[view]) {
+                document.getElementById('pageTitle').textContent = views[view].title;
+                if (!isRerender) {
+                    mainContent.innerHTML = document.getElementById(views[view].templateId).innerHTML;
+                }
+                if (views[view].navId) {
+                    const navEl = document.getElementById(views[view].navId);
+                    if (navEl) navEl.classList.add('active');
+                }
+                views[view].renderFunc.call(this, param || this.state.currentClientId);
+            }
+        };
 
         const views = {
             dashboard: { templateId: 'dashboardTemplate', navId: 'navDashboard', renderFunc: this.renderDashboard, title: "Painel Principal" },
@@ -290,16 +310,14 @@ const App = {
             clientDetail: { templateId: 'clientDetailTemplate', navId: 'navClients', renderFunc: this.renderClientDetailPage, title: "Detalhes do Cliente" }
         };
 
-        if (views[view]) {
-            document.getElementById('pageTitle').textContent = views[view].title;
-            if (!isRerender) {
-                mainContent.innerHTML = document.getElementById(views[view].templateId).innerHTML;
-            }
-            if (views[view].navId) {
-                const navEl = document.getElementById(views[view].navId);
-                if (navEl) navEl.classList.add('active');
-            }
-            views[view].renderFunc.call(this, param || this.state.currentClientId);
+        if (isRerender) {
+            navigate();
+        } else {
+            mainContent.classList.add('fade-out');
+            setTimeout(() => {
+                navigate();
+                mainContent.classList.remove('fade-out');
+            }, 150); // Deve corresponder à duração da transição do CSS
         }
     },
 
@@ -586,10 +604,7 @@ const App = {
     },
 
     renderClientsPage() {
-        document.getElementById('clientSearch').addEventListener('input', this._debounce((e) => {
-            this.renderClientsList(e.target.value);
-        }, 300));
-
+        document.getElementById('clientSearch').addEventListener('input', (e) => this.renderClientsList(e.target.value));
         document.getElementById('exportClientsBtn').addEventListener('click', () => this.exportClientsData());
         document.getElementById('deleteSelectedClientsBtn').addEventListener('click', () => this.deleteSelectedClients());
 
@@ -704,10 +719,7 @@ const App = {
     },
 
     renderRecebimentosPage() {
-        document.getElementById('recebimentosSearch').addEventListener('input', this._debounce((e) => {
-            this.renderFilteredInstallmentsList(e.target.value);
-        }, 300));
-
+        document.getElementById('recebimentosSearch').addEventListener('input', (e) => this.renderFilteredInstallmentsList(e.target.value));
         document.getElementById('toggleRecebimentosFiltersBtn').addEventListener('click', () => {
             document.getElementById('recebimentosFiltersPanel').classList.toggle('hidden');
         });
@@ -1042,10 +1054,7 @@ const App = {
     },
 
     renderDespesasPage() {
-        document.getElementById('despesasSearch').addEventListener('input', this._debounce((e) => {
-            this.renderDespesasList(e.target.value)
-        }, 300));
-
+        document.getElementById('despesasSearch').addEventListener('input', (e) => this.renderDespesasList(e.target.value));
         document.getElementById('deleteSelectedDespesasBtn').addEventListener('click', () => this.deleteSelectedDespesas());
 
         const despesasView = document.getElementById('despesasView');
@@ -1148,12 +1157,6 @@ const App = {
     renderClientsList(searchTerm = '') {
         const listEl = document.getElementById('clientsList');
         if (!listEl) return;
-
-        // UX Improvement: Skeleton Loader
-        if (this.initialDataLoadStatus.clients === false) {
-            listEl.innerHTML = this._getSkeletonClientListHTML(5);
-            return;
-        }
 
         listEl.innerHTML = '';
 
@@ -1282,12 +1285,6 @@ const App = {
     renderDespesasList(searchTerm = '') {
         const listEl = document.getElementById('despesasList');
         if (!listEl) return;
-
-        // UX Improvement: Skeleton Loader
-        if (this.initialDataLoadStatus.despesas === false) {
-            listEl.innerHTML = this._getSkeletonDespesasListHTML(5);
-            return;
-        }
 
         listEl.innerHTML = '';
         const filteredDespesas = this.state.despesas
@@ -1793,10 +1790,7 @@ const App = {
     // ORÇAMENTO LOGIC
     // =================================================================
     renderOrcamentosPage() {
-        document.getElementById('orcamentoSearch').addEventListener('input', this._debounce(() => {
-            this.renderOrcamentosList();
-        }, 300));
-
+        document.getElementById('orcamentoSearch').addEventListener('input', () => this.renderOrcamentosList());
         document.getElementById('toggleOrcamentoFiltersBtn').addEventListener('click', () => {
             document.getElementById('orcamentoFiltersPanel').classList.toggle('hidden');
         });
@@ -1809,12 +1803,6 @@ const App = {
     renderOrcamentosList() {
         const listEl = document.getElementById('orcamentosList');
         if (!listEl) return;
-
-        // UX Improvement: Skeleton Loader
-        if (this.initialDataLoadStatus.orcamentos === false) {
-            listEl.innerHTML = this._getSkeletonOrcamentosListHTML(4);
-            return;
-        }
 
         // Setup filters
         const clientFilterSelect = document.getElementById('orcamentoFilterClient');
@@ -2627,7 +2615,7 @@ const App = {
                 img.src = url;
             });
         };
-        const logoBase64 = await getBase64Image('../logo_atlas.png');
+        const logoBase64 = await getBase64Image('logo_atlas.png');
 
         const client = this.state.clients.find(c => c.id === orcamento.clientId);
         const user = AuthService.currentUser;
@@ -3028,7 +3016,7 @@ const App = {
                 img.src = url;
             });
         };
-        const logoBase64 = await getBase64Image('../logo_atlas.png').catch(() => null); // UI.showToast
+        const logoBase64 = await getBase64Image('logo_atlas.png').catch(() => null); // UI.showToast
 
         const clientInstallments = this.state.installments
             .filter(i => i.clientId === clientId)
@@ -3218,74 +3206,6 @@ const App = {
 
         renderStep();
         UI.openModal(modal);
-    },
-
-    // =================================================================
-    // UX/UI HELPERS
-    // =================================================================
-    _getSkeletonClientListHTML(count = 3) {
-        const skeletonItem = `
-            <div class="hidden md:grid md:grid-cols-12 md:gap-4 items-center px-4 py-3 border-b border-slate-200 animate-pulse">
-                <div class="col-span-1 flex items-center justify-center">
-                    <div class="h-4 w-4 bg-slate-200 rounded"></div>
-                </div>
-                <div class="col-span-3 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0"></div>
-                    <div class="min-w-0 flex-grow">
-                        <div class="h-4 bg-slate-200 rounded w-3/4"></div>
-                        <div class="h-3 bg-slate-200 rounded w-1/2 mt-2"></div>
-                    </div>
-                </div>
-                <div class="col-span-2"><div class="h-4 bg-slate-200 rounded w-2/3"></div></div>
-                <div class="col-span-3 text-right"><div class="h-4 bg-slate-200 rounded w-1/2 ml-auto"></div></div>
-                <div class="col-span-2 text-right"><div class="h-4 bg-slate-200 rounded w-1/2 ml-auto"></div></div>
-                <div class="col-span-1 text-right"><div class="w-6 h-6 bg-slate-200 rounded-full ml-auto"></div></div>
-            </div>
-        `;
-        return skeletonItem.repeat(count);
-    },
-
-    _getSkeletonOrcamentosListHTML(count = 3) {
-        const skeletonItem = `
-            <div class="hidden md:grid grid-cols-12 gap-4 items-center p-4 border-b border-slate-200 animate-pulse">
-                <div class="col-span-4 min-w-0">
-                    <div class="h-4 bg-slate-200 rounded w-3/4"></div>
-                    <div class="h-3 bg-slate-200 rounded w-1/2 mt-2"></div>
-                </div>
-                <div class="col-span-2"><div class="h-4 bg-slate-200 rounded w-2/3"></div></div>
-                <div class="col-span-2 text-center"><div class="h-5 bg-slate-200 rounded-full w-20 mx-auto"></div></div>
-                <div class="col-span-2 text-right"><div class="h-4 bg-slate-200 rounded w-1/2 ml-auto"></div></div>
-                <div class="col-span-2 text-right"><div class="w-6 h-6 bg-slate-200 rounded-full ml-auto"></div></div>
-            </div>
-        `;
-        return skeletonItem.repeat(count);
-    },
-
-    _getSkeletonDespesasListHTML(count = 4) {
-        const skeletonItem = `
-            <div class="hidden md:grid md:grid-cols-12 md:gap-4 md:items-center md:px-4 md:py-3 border-b border-slate-200 animate-pulse">
-                <div class="md:col-span-1 flex items-center justify-center">
-                    <div class="h-4 w-4 bg-slate-200 rounded"></div>
-                </div>
-                <div class="md:col-span-3"><div class="h-4 bg-slate-200 rounded w-4/5"></div></div>
-                <div class="md:col-span-3"><div class="h-5 bg-slate-200 rounded-full w-24"></div></div>
-                <div class="md:col-span-2"><div class="h-4 bg-slate-200 rounded w-2/3"></div></div>
-                <div class="md:col-span-2 text-right"><div class="h-4 bg-slate-200 rounded w-1/2 ml-auto"></div></div>
-                <div class="md:col-span-1 text-right"><div class="w-6 h-6 bg-slate-200 rounded-full ml-auto"></div></div>
-            </div>
-        `;
-        return skeletonItem.repeat(count);
-    },
-
-    _debounce(func, delay) {
-        let timeout;
-        return function (...args) {
-            const context = this;
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                func.apply(context, args);
-            }, delay);
-        };
     },
 
     // Funções movidas para ui.js, mas ainda referenciadas em alguns pontos.
