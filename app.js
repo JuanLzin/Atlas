@@ -270,12 +270,6 @@ const App = {
             this.state.selectedClients = [];
         }
 
-        if (view === 'dashboard') {
-            fabContainer.classList.remove('hidden');
-        } else {
-            fabContainer.classList.add('hidden');
-        }
-
         const mainContent = document.getElementById('mainContent');
         const fabContainer = document.getElementById('fab-container');
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
